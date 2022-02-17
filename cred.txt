@@ -1,3 +1,0 @@
-admin,123,admin
-abd,123,user
-x,x,user

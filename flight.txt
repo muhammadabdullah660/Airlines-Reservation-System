@@ -1,2 +1,2 @@
-isb,lhr,return,22jan,12
-isb,fsd,return,22jan,9
+fsd,lhr,return,22jan2022,22:00
+fsd,isb,return,22jan2022,22:00

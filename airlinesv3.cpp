@@ -248,9 +248,8 @@ int mainMenu()
 
     cout << "1- Login" << endl;
     cout << "2- Sign Up" << endl;
-    cout << "3- Announcements" << endl;
-    cout << "4- Details" << endl;
-    cout << "5- Exit" << endl;
+    cout << "3- Details" << endl;
+    cout << "4- Exit" << endl;
     cout << "Your Option..";
     cin >> option;
     return option;
@@ -276,11 +275,37 @@ string loginMenu()
 }
 void createaccount()
 {
+    bool flag = true;
+    int c = 0, x;
+    char ch;
     string user, pass, role;
     cout << "Enter the username: " << endl;
     cin >> user;
-    cout << "Enter the password: " << endl;
-    cin >> pass;
+    while (flag)
+    {
+        cout << "Enter the password: " << endl;
+        cin >> pass;
+        c = 0;
+        for (int i = 0; i < pass.length(); i++)
+        {
+            ch = pass[i];
+            x = ch;
+            if (pass[i] >= 48 && pass[i] <= 57)
+            {
+                c++;
+            }
+        }
+        if (c == 0 || pass.length() < 2)
+        {
+            flag = true;
+            cout << "Password Should Contain a Number and should be more than 1 character" << endl;
+        }
+        else
+        {
+            flag = false;
+        }
+    }
+
     cout << "Enter the role: " << endl;
     cin >> role;
     addUser(user, pass, role);
@@ -472,7 +497,7 @@ void bookedFlightsP()
     cout << "Main Menu  >   Login    >   Passenger    >   See booked Flights" << endl;
     cout << "---------------------" << endl;
     cout << "Your Flights..." << endl;
-    for (int j = entry_count; j < MAX_RECORDS; j++)
+    for (int j = 0; j < MAX_RECORDS; j++)
     {
         if (rolesA[j] == "admin")
         {
@@ -498,23 +523,32 @@ void bookedFlightsP()
 // Cancel Flights
 void cancelFlights()
 {
+    int i = 0;
     int cancel;
     cout << "Main Menu  >   Login    >   Passenger    >   Cancel A flight" << endl;
     cout << "---------------------" << endl;
     cout << "Your Flights..." << endl
          << endl;
-    for (int i = 0; i < MAX_RECORDS; i++)
+    for (int j = 0; j < MAX_RECORDS; j++)
     {
-        if (usernameA[i] == username)
+        if (rolesA[j] == "admin")
         {
+            i--;
+        }
+        else if (usernameA[j] == username)
+        {
+            i = j + i;
             if (optionF[i] == 1)
             {
                 cout << "1- From \t " << pDepartCity[i] << "\t To \t " << pArrCity[i] << " \t at \t 12:00 \t \t " << pDepartDate[i] << endl;
                 cout << "Your Total Expenditure :- " << total[i] << endl;
                 cout << "Your Option..";
                 cin >> cancel;
-                cout << "Flight has been cancelled!!";
-                optionF[entry_count] = 0;
+                if (cancel == 1)
+                {
+                    cout << "Flight has been cancelled!!";
+                    optionF[entry_count] = 0;
+                }
             }
 
             else if (optionF[i] == 0)
